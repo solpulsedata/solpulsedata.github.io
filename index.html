@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Copyright (c) 2026 SolPulseData. All Rights Reserved. -->
+<title>SolPulseData - On-Chain Solana Telemetry API</title>
+<meta name="description" content="Computed Solana market telemetry from verified Raydium V4 on-chain vault state. Telemetry only, not financial advice.">
+<link rel="canonical" href="https://solpulsedata.github.io/">
+<style>
+  :root {
+    --bg: #0b0f14; --panel: #131a22; --text: #e6edf3; --muted: #8b98a5;
+    --accent: #3ddc97; --warn: #f0b429; --line: #22303d;
+  }
+  @media (prefers-color-scheme: light) {
+    :root { --bg: #f6f8fa; --panel: #ffffff; --text: #111820; --muted: #5b6774; --accent: #0f8a5f; --warn: #8a5a00; --line: #d8dee4; }
+  }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
+  main { max-width: 920px; margin: 0 auto; padding: 32px 16px 56px; }
+  h1 { font-size: 1.9rem; margin: 0 0 8px; }
+  h2 { font-size: 1.2rem; margin: 32px 0 12px; }
+  p { margin: 0 0 12px; }
+  .muted { color: var(--muted); }
+  .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 16px; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+  th, td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  code { font-family: ui-monospace, Consolas, monospace; font-size: 0.9em; word-break: break-all; }
+  .pill { display: inline-block; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--line); font-size: 0.8rem; color: var(--muted); }
+  .ok { color: var(--accent); }
+  .warn { color: var(--warn); }
+  pre { background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 12px; overflow-x: auto; font-size: 0.85rem; }
+  footer { margin-top: 40px; font-size: 0.85rem; color: var(--muted); }
+  a { color: var(--accent); }
+  @media (max-width: 640px) { th:nth-child(3), td:nth-child(3) { display: none; } }
+</style>
+</head>
+<body>
+<main>
+  <h1>SolPulseData</h1>
+  <p class="muted">On-chain Solana telemetry, computed from verified Raydium V4 pool vaults. Built for people and for machine agents.</p>
+
+  <div class="panel">
+    <p><strong>API status:</strong> <span id="status" class="muted">checking...</span></p>
+    <p class="muted" id="status-detail"></p>
+  </div>
+
+  <h2>Endpoints</h2>
+  <table>
+    <thead><tr><th>Route</th><th>What it returns</th><th>Price</th></tr></thead>
+    <tbody>
+      <tr><td><code>GET /v1/sample</code></td><td>Static schema example. Not live data.</td><td><span class="pill">Free</span></td></tr>
+      <tr><td><code>GET /v1/levels?symbol=SOL</code></td><td>Live price, floor, ceiling, RSI-14, SMA-200, and dip score for a verified asset.</td><td><span class="pill">0.01 USDC</span></td></tr>
+      <tr><td><code>GET /v1/dipscan?min_score=60</code></td><td>Verified assets inside a computed dip zone, ranked by score.</td><td><span class="pill">0.02 USDC</span></td></tr>
+      <tr><td><code>GET /v1/cycle</code></td><td>Bitcoin halving timing from a 10-minute average block interval model.</td><td><span class="pill">0.005 USDC</span></td></tr>
+    </tbody>
+  </table>
+
+  <h2>Live sample</h2>
+  <div class="panel"><pre id="sample">loading...</pre></div>
+
+  <h2>Current status of payments</h2>
+  <p class="warn">Payment enforcement is not yet active. Paid routes are open for testing. Prices above are the intended launch prices.</p>
+
+  <h2>Methodology and limits</h2>
+  <p>Prices come from Raydium V4 pool vaults that are checked on-chain for owner and mint before use. Hourly candles are recorded by SolPulseData's own collector, so history starts when the collector starts. RSI-14 needs 15 candles and SMA-200 needs 200. Until those warmups finish, the fields show <code>null</code>.</p>
+
+  <h2>For machine agents</h2>
+  <p>Discovery files: <a href="openapi.json">openapi.json</a>, <a href="llms.txt">llms.txt</a>, <a href="https://solpulsedata.github.io/.well-known/x402.json">.well-known/x402.json</a>.</p>
+
+  <footer>
+    <p><strong>Computed market telemetry and historical technical indicators only. Not financial, investment, or trading advice.</strong></p>
+    <p>Copyright (c) 2026 SolPulseData. All Rights Reserved. <a href="terms.html">Terms of Service</a></p>
+  </footer>
+</main>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,105 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "SolPulseData On-Chain Solana Telemetry API",
+    "version": "1.0.0",
+    "summary": "Computed Solana market telemetry from verified Raydium V4 vault state.",
+    "description": "Computed market telemetry and historical technical indicators only. Not financial, investment, or trading advice. Paid routes use x402 v2 payment headers. Payment enforcement is not yet active.",
+    "contact": { "name": "SolPulseData", "url": "https://solpulsedata.github.io/" },
+    "license": { "name": "Proprietary. All Rights Reserved.", "identifier": "LicenseRef-SolPulseData-Proprietary" }
+  },
+  "servers": [
+    { "url": "https://solpulsedata.duckdns.org", "description": "Production API" }
+  ],
+  "paths": {
+    "/health": {
+      "get": {
+        "operationId": "getHealth",
+        "summary": "Service status (free)",
+        "responses": {
+          "200": {
+            "description": "Service status",
+            "content": { "application/json": { "schema": { "type": "object" } } }
+          },
+          "429": { "description": "Rate limit exceeded" }
+        }
+      }
+    },
+    "/v1/sample": {
+      "get": {
+        "operationId": "getSample",
+        "summary": "Static schema example (free, not live data)",
+        "responses": {
+          "200": {
+            "description": "Example payload",
+            "content": { "application/json": { "schema": { "type": "object" } } }
+          },
+          "429": { "description": "Rate limit exceeded" }
+        }
+      }
+    },
+    "/v1/levels": {
+      "get": {
+        "operationId": "getLevels",
+        "summary": "Live price, floor, ceiling, RSI-14, SMA-200, and dip score (0.01 USDC)",
+        "parameters": [
+          {
+            "name": "symbol",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "string", "default": "SOL", "minLength": 2, "maxLength": 10 },
+            "description": "Tracked Solana token ticker. Currently SOL."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Telemetry for the asset",
+            "content": { "application/json": { "schema": { "type": "object" } } }
+          },
+          "400": { "description": "Unsupported symbol" },
+          "402": { "description": "Payment required (x402)" },
+          "502": { "description": "On-chain read or verification failed" }
+        },
+        "x-x402": { "price_usdc": "0.01", "network": "solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1", "status": "testing" }
+      }
+    },
+    "/v1/dipscan": {
+      "get": {
+        "operationId": "getDipscan",
+        "summary": "Verified assets inside a computed dip zone, ranked (0.02 USDC)",
+        "parameters": [
+          {
+            "name": "min_score",
+            "in": "query",
+            "required": false,
+            "schema": { "type": "integer", "default": 60, "minimum": 0, "maximum": 100 },
+            "description": "Minimum dip score"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ranked results",
+            "content": { "application/json": { "schema": { "type": "object" } } }
+          },
+          "402": { "description": "Payment required (x402)" }
+        },
+        "x-x402": { "price_usdc": "0.02", "network": "solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1", "status": "testing" }
+      }
+    },
+    "/v1/cycle": {
+      "get": {
+        "operationId": "getCycle",
+        "summary": "Bitcoin halving timing estimate (0.005 USDC)",
+        "description": "Estimate from a fixed model: the April 2024 halving at block 840,000 is the anchor, each halving interval is 210,000 blocks, and blocks are assumed to average 10 minutes. Real block times vary.",
+        "responses": {
+          "200": {
+            "description": "Halving timing estimate",
+            "content": { "application/json": { "schema": { "type": "object" } } }
+          },
+          "402": { "description": "Payment required (x402)" }
+        },
+        "x-x402": { "price_usdc": "0.005", "network": "solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1", "status": "testing" }
+      }
+    }
+  }
+}

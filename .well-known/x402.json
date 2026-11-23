@@ -1,0 +1,32 @@
+{
+  "x402Version": 2,
+  "name": "SolPulseData On-Chain Solana Telemetry",
+  "description": "Computed Solana market telemetry from verified Raydium V4 vault state. Telemetry only, not financial advice.",
+  "payTo": "EdW5Po6qGC3KxcAyugYHrBC891ctL54UMseWaqaLugV6",
+  "apiBaseUrl": "https://solpulsedata.duckdns.org",
+  "networks": [
+    {
+      "caip2": "solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1",
+      "name": "Solana Devnet",
+      "asset": "USDC",
+      "assetMint": "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU",
+      "decimals": 6,
+      "status": "testing"
+    },
+    {
+      "caip2": "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp",
+      "name": "Solana Mainnet",
+      "asset": "USDC",
+      "assetMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "decimals": 6,
+      "status": "disabled_until_legal_clearance"
+    }
+  ],
+  "routes": [
+    { "method": "GET", "path": "/v1/levels", "priceUsd": "0.01", "atomicAmount": "10000" },
+    { "method": "GET", "path": "/v1/dipscan", "priceUsd": "0.02", "atomicAmount": "20000" },
+    { "method": "GET", "path": "/v1/cycle", "priceUsd": "0.005", "atomicAmount": "5000" }
+  ],
+  "paymentStatus": "not_enforced_testing",
+  "disclaimer": "Computed market telemetry and historical technical indicators only. Not financial, investment, or trading advice."
+}

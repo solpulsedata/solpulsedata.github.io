@@ -1,0 +1,30 @@
+# SolPulseData
+
+> On-chain Solana market telemetry from verified Raydium V4 vault state. Computed telemetry and historical technical indicators only. Not financial, investment, or trading advice.
+
+Base URL: https://solpulsedata.duckdns.org
+
+Status: testing. Payment enforcement is not yet active. Paid routes are open for testing and will be enforced once legal review is complete.
+
+## Free endpoints
+
+- GET /health: service status and tracked assets
+- GET /v1/sample: static schema example. Not live data.
+
+## Paid endpoints (x402 v2, USDC on Solana)
+
+- GET /v1/levels?symbol=SOL: price, floor, ceiling, RSI-14, SMA-200, dip score. Price 0.01 USDC.
+- GET /v1/dipscan?min_score=60: verified assets in a dip zone, ranked. Price 0.02 USDC.
+- GET /v1/cycle: Bitcoin halving timing estimate. Price 0.005 USDC.
+
+## Method summary
+
+Prices are read from Raydium V4 pool vaults after on-chain owner and mint checks. Hourly candles are recorded by the SolPulseData collector. RSI-14 needs 15 candles and SMA-200 needs 200 candles. Fields show null until warmup completes.
+
+## Machine-readable files
+
+- OpenAPI: https://solpulsedata.github.io/openapi.json
+- x402 discovery: https://solpulsedata.github.io/.well-known/x402.json
+- Terms: https://solpulsedata.github.io/terms.html
+
+Copyright (c) 2026 SolPulseData. All Rights Reserved.
