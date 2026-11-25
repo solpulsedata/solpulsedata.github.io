@@ -1,32 +1,80 @@
 {
   "x402Version": 2,
-  "name": "SolPulseData On-Chain Solana Telemetry",
-  "description": "Computed Solana market telemetry from verified Raydium V4 vault state. Telemetry only, not financial advice.",
+  "name": "SolPulseData",
+  "description": "On-chain Solana telemetry and deterministic indicators via x402. Telemetry only; not financial advice.",
+  "network": "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp",
+  "asset": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+  "facilitator": "https://facilitator.payai.network",
   "payTo": "EdW5Po6qGC3KxcAyugYHrBC891ctL54UMseWaqaLugV6",
-  "apiBaseUrl": "https://solpulsedata.duckdns.org",
-  "networks": [
+  "services": [
     {
-      "caip2": "solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1",
-      "name": "Solana Devnet",
-      "asset": "USDC",
-      "assetMint": "4zMMC9srt5Ri5X14GAgXhaHii3GnPAEERYPJgZJDncDU",
-      "decimals": 6,
-      "status": "testing"
+      "method": "GET",
+      "path": "/v1/levels",
+      "url": "https://solpulsedata.duckdns.org/v1/levels",
+      "description": "Live Raydium V4 SOL/USDC price, 72h floor/ceiling, RSI-14, SMA-200, and dip score.",
+      "scheme": "exact",
+      "network": "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp",
+      "asset": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "amount": "0.01",
+      "atomicAmount": "10000",
+      "payTo": "EdW5Po6qGC3KxcAyugYHrBC891ctL54UMseWaqaLugV6",
+      "queryParams": {
+        "symbol": { "type": "string", "default": "SOL", "required": false }
+      },
+      "extensions": {
+        "bazaar": {
+          "discoverable": true,
+          "info": {
+            "input": { "type": "http", "method": "GET", "queryParams": { "symbol": "SOL" } },
+            "output": {
+              "type": "json",
+              "example": {
+                "symbol": "SOL",
+                "price_usdc": 69.91,
+                "floor": 68.1,
+                "ceiling": 79.8,
+                "rsi_14": 42.5,
+                "sma_200": null,
+                "dip_score": 68,
+                "warmup_complete": false
+              }
+            }
+          }
+        }
+      }
     },
     {
-      "caip2": "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp",
-      "name": "Solana Mainnet",
-      "asset": "USDC",
-      "assetMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
-      "decimals": 6,
-      "status": "disabled_until_legal_clearance"
+      "method": "GET",
+      "path": "/v1/dipscan",
+      "url": "https://solpulsedata.duckdns.org/v1/dipscan",
+      "description": "Deterministic dip score scan across tracked Solana pools.",
+      "scheme": "exact",
+      "network": "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp",
+      "asset": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "amount": "0.02",
+      "atomicAmount": "20000",
+      "payTo": "EdW5Po6qGC3KxcAyugYHrBC891ctL54UMseWaqaLugV6",
+      "queryParams": {
+        "min_score": { "type": "integer", "default": 60, "minimum": 0, "maximum": 100, "required": false }
+      },
+      "extensions": {
+        "bazaar": { "discoverable": true }
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v1/cycle",
+      "url": "https://solpulsedata.duckdns.org/v1/cycle",
+      "description": "Deterministic Bitcoin block-halving cycle progress telemetry.",
+      "scheme": "exact",
+      "network": "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp",
+      "asset": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+      "amount": "0.005",
+      "atomicAmount": "5000",
+      "payTo": "EdW5Po6qGC3KxcAyugYHrBC891ctL54UMseWaqaLugV6",
+      "extensions": {
+        "bazaar": { "discoverable": true }
+      }
     }
-  ],
-  "routes": [
-    { "method": "GET", "path": "/v1/levels", "priceUsd": "0.01", "atomicAmount": "10000" },
-    { "method": "GET", "path": "/v1/dipscan", "priceUsd": "0.02", "atomicAmount": "20000" },
-    { "method": "GET", "path": "/v1/cycle", "priceUsd": "0.005", "atomicAmount": "5000" }
-  ],
-  "paymentStatus": "not_enforced_testing",
-  "disclaimer": "Computed market telemetry and historical technical indicators only. Not financial, investment, or trading advice."
+  ]
 }
