@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -55,11 +55,11 @@
     </tbody>
   </table>
 
-  <h2>Live sample</h2>
+  <h2>Static sample payload (schema preview only)</h2>
   <div class="panel"><pre id="sample">loading...</pre></div>
 
   <h2>Current status of payments</h2>
-  <p class="warn">Payment enforcement is not yet active. Paid routes are open for testing. Prices above are the intended launch prices.</p>
+  <p class="warn">x402 v2 payment enforcement is active on Solana Mainnet (<code>solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp</code>) via PayAI (<code>https://facilitator.payai.network</code>). Paid routes require USDC (<code>EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v</code>) sent to <code>EdW5Po6qGC3KxcAyugYHrBC891ctL54UMseWaqaLugV6</code>: <code>0.01 USDC</code> (<code>/v1/levels</code>), <code>0.02 USDC</code> (<code>/v1/dipscan</code>), and <code>0.005 USDC</code> (<code>/v1/cycle</code>).</p>
 
   <h2>Methodology and limits</h2>
   <p>Prices come from Raydium V4 pool vaults that are checked on-chain for owner and mint before use. Hourly candles are recorded by SolPulseData's own collector, so history starts when the collector starts. RSI-14 needs 15 candles and SMA-200 needs 200. Until those warmups finish, the fields show <code>null</code>.</p>
@@ -75,3 +75,5 @@
 <script src="app.js"></script>
 </body>
 </html>
+
+
