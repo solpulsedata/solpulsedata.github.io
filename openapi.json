@@ -1,10 +1,10 @@
-{
+﻿{
   "openapi": "3.1.0",
   "info": {
     "title": "SolPulseData On-Chain Solana Telemetry API",
     "version": "1.0.0",
     "summary": "Computed Solana market telemetry from verified Raydium V4 vault state.",
-    "description": "Computed market telemetry and historical technical indicators only. Not financial, investment, or trading advice. Paid routes use x402 v2 payment headers. Payment enforcement is not yet active.",
+    "description": "Computed market telemetry and historical technical indicators only. Not financial, investment, or trading advice. Paid routes use x402 v2 payment headers. x402 v2 payment enforcement is active on Solana Mainnet via PayAI.",
     "contact": { "name": "SolPulseData", "url": "https://solpulsedata.github.io/" },
     "license": { "name": "Proprietary. All Rights Reserved.", "identifier": "LicenseRef-SolPulseData-Proprietary" }
   },
@@ -60,7 +60,7 @@
           "402": { "description": "Payment required (x402)" },
           "502": { "description": "On-chain read or verification failed" }
         },
-        "x-x402": { "price_usdc": "0.01", "network": "solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1", "status": "testing" }
+        "x-x402": { "price_usdc": "0.01", "network": "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp", "status": "active" }
       }
     },
     "/v1/dipscan": {
@@ -83,7 +83,7 @@
           },
           "402": { "description": "Payment required (x402)" }
         },
-        "x-x402": { "price_usdc": "0.02", "network": "solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1", "status": "testing" }
+        "x-x402": { "price_usdc": "0.02", "network": "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp", "status": "active" }
       }
     },
     "/v1/cycle": {
@@ -98,8 +98,9 @@
           },
           "402": { "description": "Payment required (x402)" }
         },
-        "x-x402": { "price_usdc": "0.005", "network": "solana:EtWTRABZaYq6iMfeYKouRu166VU2xqa1", "status": "testing" }
+        "x-x402": { "price_usdc": "0.005", "network": "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp", "status": "active" }
       }
     }
   }
 }
+
